@@ -1,0 +1,24 @@
+{
+  "books": [
+    {
+      "id": 2,
+      "title": "Book 22",
+      "author": "Augusto",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum, alias nulla autem repellat laboriosam repudiandae quasi? Quis tenetur magni sunt quia accusantium molestiae. Eos, dolorem culpa! Aliquid officia molestiae voluptates!",
+      "available": true
+    },
+    {
+      "id": 3,
+      "title": "Book 3",
+      "author": "Augusto",
+      "description": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum, alias nulla autem repellat laboriosam repudiandae quasi? Quis tenetur magni sunt quia accusantium molestiae. Eos, dolorem culpa! Aliquid officia molestiae voluptates!",
+      "available": false
+    },
+    {
+      "title": "Livrooooo",
+      "author": "dushdusdushduasudhudsa",
+      "available": true,
+      "id": 6
+    }
+  ]
+}
