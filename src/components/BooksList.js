@@ -21,6 +21,11 @@ const StyledSearchBarContainer = styled.div`
   button {
     padding: 10px;
   }
+  @media (max-width: 1024px) {
+    input {
+      width: 50%;
+    }
+  }
   @media (max-width: 500px) {
     padding: 10px;
     justify-content: center;
@@ -28,11 +33,6 @@ const StyledSearchBarContainer = styled.div`
     input {
       margin-bottom: 15px;
       width: 100%;
-    }
-  }
-  @media (max-width: 1024px) {
-    input {
-      width: 50%;
     }
   }
 `;

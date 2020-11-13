@@ -7,9 +7,30 @@ import { BiArrowBack } from 'react-icons/bi';
 import { ModalAlertContext } from '../contexts/ModalAlertContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 
-const StyledLabel = styled.label`
-  margin-bottom: 5px;
-  display: block;
+const StyledInputContainer = styled.div`
+  margin-bottom: 10px;
+  input {
+    margin-top: 5px;
+    width: 100%;
+  }
+  span {
+    color: red;
+  }
+  textarea {
+    margin-top: 5px;
+    width: calc(100% - 25px);
+    height: 100px;
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    font-size: 16px;
+    padding: 10px;
+    &:focus {
+      outline: 0;
+    }
+  }
+  form div:last-child button:first-child {
+    background-color: red;
+  }
 `;
 const SyledForm = styled.form`
   display: ${(props) => (props.editing ? 'block' : 'none')};
@@ -36,27 +57,6 @@ const StyledInfoContainer = styled.div`
     button {
       padding: 10px 20px;
       margin: 20px;
-    }
-  }
-  form {
-    input {
-      width: 100%;
-      margin-bottom: 10px;
-    }
-    div:last-child button:first-child {
-      background-color: red;
-    }
-    textarea {
-      width: calc(100% - 25px);
-      height: 100px;
-      border-radius: 5px;
-      border: solid 1px #ccc;
-      margin-bottom: 20px;
-      font-size: 16px;
-      padding: 10px;
-      &:focus {
-        outline: 0;
-      }
     }
   }
   @media (max-width: 500px) {
@@ -89,7 +89,10 @@ const BookDetails = () => {
   const [loadingState, setLoadingState] = useContext(LoadingContext);
   const [isEditing, setIsEditing] = useState(false);
   const { id } = useParams();
-  const { register, handleSubmit, setValue } = useForm();
+
+  const { register, handleSubmit, setValue, errors } = useForm();
+  const errorFieldMessage = (propName) =>
+    errors[propName] ? errors[propName].message : '';
 
   const history = useHistory();
 
@@ -194,36 +197,49 @@ const BookDetails = () => {
             id="form-book-register"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <div>
-              <StyledLabel htmlFor="title">Título:</StyledLabel>
-              <input
-                name="title"
-                id="title"
-                type="text"
-                ref={register({
-                  required: { value: true, message: 'Título Inválido' },
-                })}
-              />
-              <StyledLabel htmlFor="author">Autor:</StyledLabel>
-              <input
-                name="author"
-                id="author"
-                type="text"
-                ref={register({
-                  required: { value: true, message: 'Nome Inválido' },
-                })}
-              />
-            </div>
-            <div>
-              <StyledLabel htmlFor="description">Descrição:</StyledLabel>
-              <textarea
-                name="description"
-                id="description"
-                ref={register({
-                  required: { value: true, message: 'Descrição Inválida' },
-                })}
-              />
-            </div>
+            <StyledInputContainer>
+              <label htmlFor="title">
+                Título:
+                <input
+                  name="title"
+                  id="title"
+                  type="text"
+                  ref={register({
+                    required: { value: true, message: 'Título Inválido' },
+                  })}
+                />
+              </label>
+              {errors.title && <span>{errorFieldMessage('title')}</span>}
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <label htmlFor="author">
+                Autor:
+                <input
+                  name="author"
+                  id="author"
+                  type="text"
+                  ref={register({
+                    required: { value: true, message: 'Nome Inválido' },
+                  })}
+                />
+              </label>
+              {errors.author && <span>{errorFieldMessage('author')}</span>}
+            </StyledInputContainer>
+            <StyledInputContainer>
+              <label htmlFor="description">
+                Descrição:
+                <textarea
+                  name="description"
+                  id="description"
+                  ref={register({
+                    required: { value: true, message: 'Descrição Inválida' },
+                  })}
+                />
+              </label>
+              {errors.description && (
+                <span>{errorFieldMessage('description')}</span>
+              )}
+            </StyledInputContainer>
             <div>
               <button onClick={() => setIsEditing(false)} type="button">
                 Cancelar

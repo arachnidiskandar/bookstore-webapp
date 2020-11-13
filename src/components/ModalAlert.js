@@ -48,7 +48,9 @@ Modal.defaultStyles.overlay = {
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
   paddingTop: '10vh',
 };
-Modal.setAppElement('#root');
+
+if (process.env.NODE_ENV !== 'test') Modal.setAppElement('#root');
+
 const ModalAlert = () => {
   const [modalAlertState, setModalAlertState] = useContext(ModalAlertContext);
 

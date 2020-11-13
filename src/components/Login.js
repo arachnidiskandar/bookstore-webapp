@@ -5,9 +5,17 @@ import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { LoadingContext } from '../contexts/LoadingContext';
 
-const StyledLabel = styled.label`
-  margin-bottom: 5px;
-  display: block;
+export const StyledInputContainer = styled.div`
+  margin-bottom: 20px;
+  input {
+    margin-top: 5px;
+  }
+  span {
+    color: red;
+  }
+  @media (max-width: 500px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const StyledCard = styled.div`
@@ -24,7 +32,7 @@ const StyledCard = styled.div`
     font-size: 20px;
     padding: 25px 0;
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 40px;
     &:hover {
       cursor: pointer;
     }
@@ -36,7 +44,6 @@ const StyledCard = styled.div`
     height: 50px;
     padding: 10px;
     width: 100%;
-    margin-bottom: 20px;
   }
   @media (max-width: 500px) {
     padding: 25px;
@@ -44,6 +51,7 @@ const StyledCard = styled.div`
       height: 30px;
       font-size: 16px;
       padding: 20px 0;
+      margin-top: 0px;
     }
     input {
       height: 40px;
@@ -59,12 +67,11 @@ const StyledContainer = styled.div`
 `;
 const Login = () => {
   const history = useHistory();
-  // const [loading, setLoading] = useState(false);
   const [loadingState, setLoadingState] = useContext(LoadingContext);
   const { setCurrentUser } = useContext(AuthContext);
-  const { register, handleSubmit, setError, errors } = useForm();
-  // const errorFieldMessage = (propName) =>
-  //   errors[propName] ? errors[propName].message : '';
+  const { register, handleSubmit, errors } = useForm();
+  const errorFieldMessage = (propName) =>
+    errors[propName] ? errors[propName].message : '';
   const onSubmit = (data) => {
     setLoadingState(true);
     if (data.user === 'admin' && data.password === '102030') {
@@ -78,29 +85,35 @@ const Login = () => {
       <StyledCard>
         <h3>Bem Vindo</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <StyledLabel htmlFor="user">Usuário:</StyledLabel>
-            <input
-              name="user"
-              id="user"
-              type="text"
-              ref={register({
-                required: { value: true, message: 'Usuário Inválido' },
-              })}
-            />
-          </div>
-          <div>
-            <StyledLabel htmlFor="password">Senha:</StyledLabel>
-            <input
-              name="password"
-              id="password"
-              type="password"
-              autoComplete="current-password"
-              ref={register({
-                required: { value: true, message: 'Senha Inválida' },
-              })}
-            />
-          </div>
+          <StyledInputContainer>
+            <label htmlFor="user">
+              Usuário:
+              <input
+                name="user"
+                id="user"
+                type="text"
+                ref={register({
+                  required: { value: true, message: 'Usuário Inválido' },
+                })}
+              />
+            </label>
+            {errors.user && <span>{errorFieldMessage('user')}</span>}
+          </StyledInputContainer>
+          <StyledInputContainer>
+            <label htmlFor="password">
+              Senha:
+              <input
+                name="password"
+                id="password"
+                type="password"
+                autoComplete="current-password"
+                ref={register({
+                  required: { value: true, message: 'Senha Inválida' },
+                })}
+              />
+            </label>
+            {errors.password && <span>{errorFieldMessage('password')}</span>}
+          </StyledInputContainer>
           <button type="submit">Entrar</button>
         </form>
       </StyledCard>

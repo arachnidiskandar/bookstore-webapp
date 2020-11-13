@@ -6,10 +6,29 @@ import Modal from 'react-modal';
 import { ModalAlertContext } from '../contexts/ModalAlertContext';
 import { BooksInfoContext } from '../contexts/BooksInfoContext';
 
-const StyledLabel = styled.label`
-  margin-bottom: 5px;
-  display: block;
+const StyledInputContainer = styled.div`
+  margin-bottom: 10px;
+  input {
+    margin-top: 5px;
+    width: 100%;
+  }
+  span {
+    color: red;
+  }
+  textarea {
+    margin-top: 5px;
+    width: calc(100% - 25px);
+    height: 100px;
+    border-radius: 5px;
+    border: solid 1px #ccc;
+    font-size: 16px;
+    padding: 10px;
+    &:focus {
+      outline: 0;
+    }
+  }
 `;
+
 const StyledButtonContainer = styled.div`
   display: flex;
   margin-top: 20px;
@@ -31,10 +50,7 @@ const StyledModal = styled(Modal)`
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
   margin: auto;
-  form input {
-    width: 100%;
-    margin-bottom: 10px;
-  }
+
   &:focus {
     outline: 0;
   }
@@ -43,7 +59,10 @@ const StyledModal = styled(Modal)`
   }
 `;
 const BookCreation = () => {
-  const { register, handleSubmit, setError, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
+  const errorFieldMessage = (propName) =>
+    errors[propName] ? errors[propName].message : '';
+
   const [booksInfo, setBooksInfo] = useContext(BooksInfoContext);
   const [modalAlertState, setModalAlertState] = useContext(ModalAlertContext);
 
@@ -83,28 +102,49 @@ const BookCreation = () => {
     >
       <h3>Cadastre um Livro</h3>
       <form id="form-book-register" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <StyledLabel htmlFor="title">Título:</StyledLabel>
-          <input
-            name="title"
-            id="title"
-            type="text"
-            ref={register({
-              required: { value: true, message: 'Título Inválido' },
-            })}
-          />
-        </div>
-        <div>
-          <StyledLabel htmlFor="author">Autor:</StyledLabel>
-          <input
-            name="author"
-            id="author"
-            type="text"
-            ref={register({
-              required: { value: true, message: 'Nome Inválido' },
-            })}
-          />
-        </div>
+        <StyledInputContainer>
+          <label htmlFor="title">
+            Título:
+            <input
+              name="title"
+              id="title"
+              type="text"
+              ref={register({
+                required: { value: true, message: 'Título Obrigatório' },
+              })}
+            />
+          </label>
+          {errors.title && <span>{errorFieldMessage('title')}</span>}
+        </StyledInputContainer>
+        <StyledInputContainer>
+          <label htmlFor="author">
+            Autor:
+            <input
+              name="author"
+              id="author"
+              type="text"
+              ref={register({
+                required: { value: true, message: 'Autor Obrigatório' },
+              })}
+            />
+          </label>
+          {errors.author && <span>{errorFieldMessage('author')}</span>}
+        </StyledInputContainer>
+        <StyledInputContainer>
+          <label htmlFor="description">
+            Descrição:
+            <textarea
+              name="description"
+              id="description"
+              ref={register({
+                required: { value: true, message: 'Descrição Obrigatória' },
+              })}
+            />
+          </label>
+          {errors.description && (
+            <span>{errorFieldMessage('description')}</span>
+          )}
+        </StyledInputContainer>
       </form>
       <StyledButtonContainer>
         <button onClick={handleCloseEvent} type="button">
