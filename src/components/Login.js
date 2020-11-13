@@ -84,7 +84,7 @@ const Login = () => {
     <StyledContainer>
       <StyledCard>
         <h3>Bem Vindo</h3>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form data-testid="test-form-id" onSubmit={handleSubmit(onSubmit)}>
           <StyledInputContainer>
             <label htmlFor="user">
               Usuário:

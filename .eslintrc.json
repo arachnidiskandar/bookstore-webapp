@@ -25,5 +25,13 @@
         "prettier/prettier": ["error", {"endOfLine":"auto"}],
         "react/prop-types": 0,
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
-    }
+    },
+    "overrides": [
+      {
+        "files": ["**/*.test.js","*.test.js"],
+        "rules": {
+          "no-unused-expressions": "off"
+        }
+      }
+    ]
 }
