@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-# É necessário rodar esse script para rodar o banco local:
+## É necessário rodar esse script para rodar o banco local:
 ### `npx json-server --watch db.json --port 3001 --routes routes.json`
 
 ## Available Scripts
